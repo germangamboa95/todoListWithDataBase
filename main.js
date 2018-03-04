@@ -18,10 +18,10 @@ let taskManager = {
     if(choice === 'Delete'){ 
       e.target.parentElement.outerHTML = '';
       console.log(e);
-    },
-    printF: () => {
-      console.log('Hello World')
     }
+  },
+  printF: () => {
+    console.log('Hello World');
   }
 }
 
