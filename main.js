@@ -1,27 +1,40 @@
 let taskManager = {
-  todo : [],
+  todo : {},
+  newKey: (task) => {
+    let arr = task.split('');
+    return  arr.map(item => item.charCodeAt(item)).reduce((acc, cur) => acc + cur);;
+  },
   addTask : (task) =>{
-    taskManager.todo.push(task);
+    console.log(taskManager.todo);
+    taskManager.todo[taskManager.newKey(task)] =  task;
   },
   render : () =>{
-    taskManager.todo.forEach(item =>{
-      taskBox.innerHTML += `<li class="list-group-item d-flex justify-content-between"><span class="mr-5">${item}</span> <a href="" class="badge">Delete</a></li>`;
-    });
+    for(let key in taskManager.todo){
+      console.log(key,": ",taskManager.todo[key]);
+      let task = taskManager.todo[key];
+      taskManager.incRender(task);
+    }
   },
-  incRender : () => {
-    let x = taskManager.todo.length;
-    let item = taskManager.todo[x - 1];
-    taskBox.innerHTML += `<li class="list-group-item d-flex justify-content-between"><span class="mr-5">${item}</span> <a href="" class="badge">Delete</a></li>`;
+  incRender : (task) => {
+    let  el = document.createElement('li');
+    el.classList.add('list-group-item','d-flex','justify-content-between');
+    el.setAttribute("value", taskManager.newKey(task));
+    el.innerHTML =  `<span class="mr-5">${task}</span> <a href="" class="badge">Delete</a>`;
+    taskBox.appendChild(el);
   },
   itemDelete : (e) => {
     let choice = e.target.innerHTML;
-    if(choice === 'Delete'){ 
+    let key = e.target.parentElement.value;
+    if(choice === 'Delete'){
       e.target.parentElement.outerHTML = '';
+      delete taskManager.todo[key];
       console.log(e);
     }
   },
-  printF: () => {
-    console.log('Hello World');
+  saveToLocal: () => {
+    let storage = window.localStorage;
+    let jstring = JSON.stringify(taskManager.todo);
+    storage.setItem('todo', jstring);
   }
 }
 
@@ -32,19 +45,32 @@ let taskManager = {
 let submit = document.getElementById('form');
 let taskBox = document.getElementById('task-box');
 
+window.onload = (e) => {
 
+  console.log('Document loaded');
+  let storage = window.localStorage;
+  let todoString = storage.getItem('todo');
+  if(todoString != null){
+    let todo = JSON.parse(todoString);
+    taskManager.todo = todo;
+    taskManager.render();
+  }
+
+}
 //Event listeners
 submit.addEventListener('submit', e =>{
   e.preventDefault();
-  var task = e.target[0].value;
+  let task = e.target[0].value;
   if(task != ''){
     e.target[0].value = '';
     taskManager.addTask(task);
-    taskManager.incRender();
+    taskManager.incRender(task);
+    taskManager.saveToLocal();
   }
 });
 
 taskBox.addEventListener('click', e =>{
   e.preventDefault();
   taskManager.itemDelete(e);
+  taskManager.saveToLocal();
 });
