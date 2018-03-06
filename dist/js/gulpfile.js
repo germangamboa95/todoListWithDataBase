@@ -1,0 +1,1 @@
+var gulp=require("gulp"),uglify=require("gulp-uglify");function defaultTask(l){console.log("hello cruel world"),l()}gulp.task("default",function(){gulp.src("*.js").pipe(uglify()).pipe(gulp.dest("dist/js"))});
