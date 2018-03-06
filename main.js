@@ -11,7 +11,7 @@ let taskManager = {
   render : () =>{
     for(let key in taskManager.todo){
       console.log(key,": ",taskManager.todo[key]);
-      let task = taskManager.todo[key];
+      let task = taskManager.todo[key] ;
       taskManager.incRender(task);
     }
   },
