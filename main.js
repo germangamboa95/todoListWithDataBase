@@ -12,17 +12,17 @@ let taskManager = {
     for(let key in taskManager.todo){
       console.log(key,": ",taskManager.todo[key]);
       let task = taskManager.todo[key] ;
-      taskManager.incRender(task);
+      taskManager.addElement(task);
     }
   },
-  incRender : (task) => {
+  addElement : (task) => {
     let  el = document.createElement('li');
     el.classList.add('list-group-item','d-flex','justify-content-between');
     el.setAttribute("value", taskManager.newKey(task));
     el.innerHTML =  `<span class="mr-5">${task}</span> <a href="" class="badge">Delete</a>`;
     taskBox.appendChild(el);
   },
-  itemDelete : (e) => {
+  taskDelete : (e) => {
     let choice = e.target.innerHTML;
     let key = e.target.parentElement.value;
     if(choice === 'Delete'){
@@ -64,13 +64,13 @@ submit.addEventListener('submit', e =>{
   if(task != ''){
     e.target[0].value = '';
     taskManager.addTask(task);
-    taskManager.incRender(task);
+    taskManager.addElement(task);
     taskManager.saveToLocal();
   }
 });
 
 taskBox.addEventListener('click', e =>{
   e.preventDefault();
-  taskManager.itemDelete(e);
+  taskManager.taskDelete(e);
   taskManager.saveToLocal();
 });

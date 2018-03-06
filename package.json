@@ -1,0 +1,19 @@
+{
+  "name": "tododatabase",
+  "version": "1.0.0",
+  "description": "basic todo app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/germangamboa95/todoListWithDataBase.git"
+  },
+  "author": "German Gamboa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/germangamboa95/todoListWithDataBase/issues"
+  },
+  "homepage": "https://github.com/germangamboa95/todoListWithDataBase#readme"
+}
